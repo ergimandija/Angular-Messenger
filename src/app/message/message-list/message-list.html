@@ -1,0 +1,8 @@
+<div class="chat">
+  @for(msg of messages; track msg.sender) {
+    <div class="message">
+      <strong class="sender">{{ msg.sender }}</strong>
+      <span class="content">{{ msg.content }}</span>
+    </div>
+  }
+</div>

@@ -1,0 +1,25 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.message {
+  background-color: #f5f7fb;
+  padding: 10px 12px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.sender {
+  color: #2b6cb0;
+  margin-right: 6px;
+}
+
+.content {
+  color: #333;
+}

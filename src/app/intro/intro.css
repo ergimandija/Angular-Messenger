@@ -1,0 +1,35 @@
+.intro {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e9f0ff, #f7f9fc);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 20px;
+}
+
+.login-btn {
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3182ce;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-btn:hover {
+  background-color: #2b6cb0;
+}
+
+.login-btn:active {
+  transform: scale(0.97);
+}
