@@ -1,3 +1,4 @@
+  <div >
   @if (errorMessage()) {
     <div>
       {{ errorMessage() }}
@@ -7,11 +8,23 @@
   @if(isLoading()){
     <div>...Loading</div>
   }
-<div class="chat">
-  @for(msg of messages(); track msg.senderId) {
+
+<div class="chat" id="messageContainer">
+  @for(msg of messages(); track msg.timestamp) {
     <div class="message">
-      <strong class="sender">{{ msg.senderId }}</strong>
+      <strong class="sender">{{ msg.sender_id }}</strong>
       <span class="content">{{ msg.message }}</span>
     </div>
   }
 </div>
+  <div class="chat-box">
+    <input [(ngModel)]="messageEntry" placeholder="Enter Message" />
+    <button (click)="sendMessage()" class="login-btn">
+      Send
+    </button>
+      <button (click)="refreshMessages()" class="refresh-btn">
+      Refresh
+    </button>
+  </div>
+ 
+  </div>

@@ -6,6 +6,9 @@
   max-width: 500px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+
+  height: 600px;
+  overflow-y: auto;
 }
 
 .message {

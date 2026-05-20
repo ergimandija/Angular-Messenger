@@ -2,6 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { ApiService, UserData, UserListItem } from '../../apiservice';
 import { CommonModule } from '@angular/common';
 import { MessageList } from '../message-list/message-list';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-conversation',
   standalone: true,
@@ -15,10 +16,13 @@ export class Conversation {
   errorMessage = signal('');
   selectedUserId = signal('');
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService,private router:Router) {
       effect(()=>{
         this.loadUsers();
       })
+      // if(!this.apiService.loginStatus().loggedIn){
+      //     this.router.navigate(['/login']);
+      // }
   }
 
  

@@ -10,10 +10,10 @@ const initialLoginStatus = {
 };
 
 export interface Message {
-  senderId: string,
-  recieverId: string,
+  sender_id: string,
+  reciever_id: string,
   message: string,
-  timestamp: string
+  timestamp?: string
 }
 
 export interface UserData {
@@ -72,7 +72,7 @@ export class ApiService {
               username: username,
               token: data.token
             });
-            console.log("updated");
+            
           }
         }
     });
@@ -97,6 +97,25 @@ export class ApiService {
             return { error: conversation.error };
         }
         return conversation;
+  }
+  
+  async sendMessage(recieverId: string,message: string){
+    const token = this._loginStatus().token;
+    const response = await fetch(this.apiUrl + "send_message.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                sender_id: this._loginStatus().id,
+                receiver_id: recieverId,
+                token: token,
+                message: message
+            })
+        });
+        const responseData = await response.json();
+        if (responseData.error) {
+            return { success: false, error: responseData.error };
+        }
+        return responseData;
   }
 
 
