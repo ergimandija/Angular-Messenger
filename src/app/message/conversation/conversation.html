@@ -1,1 +1,30 @@
-<p>conversation works!</p>
+<div class="messenger-layout">
+<div class="user-list">
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <ul id="userList">
+    @for (user of users(); track user.id) {
+      @if(user.id){
+      <li class="user-item" (click)="loadConversation(user.id)" >
+        <div class="avatar">
+          {{ user.name?.charAt(0)?.toUpperCase() }}
+        </div>
+
+        <div class="user-info">
+          <span class="username">
+            {{ user.name }}
+          </span>
+        </div>
+      </li>
+    }
+    }
+  </ul>
+
+</div>
+<app-message-list class="chat-window" [userId]="selectedUserId()"></app-message-list>
+</div>
