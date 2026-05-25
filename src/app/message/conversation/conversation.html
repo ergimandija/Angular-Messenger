@@ -6,11 +6,31 @@
       {{ errorMessage() }}
     </div>
   }
+  
 
   <ul id="userList">
+    <div>Known Users</div>
     @for (user of users(); track user.id) {
-      @if(user.id){
-      <li class="user-item" (click)="loadConversation(user.id)" >
+      @if(user.id && user.name && knownUsers.includes(user.name)){
+      <li class="user-item" (click)="loadConversation(user.id,user.name)" >
+        <div class="avatar">
+          {{ user.name?.charAt(0)?.toUpperCase() }}
+        </div>
+
+        <div class="user-info">
+          <span class="username">
+            {{ user.name }}
+          </span>
+        </div>
+      </li>
+    }
+    }
+  </ul>
+  <ul id="userList">
+    <div>Other Users</div>
+    @for (user of users(); track user.id) {
+      @if(user.id && user.name && !knownUsers.includes(user.name)){
+      <li class="user-item" (click)="loadConversation(user.id,user.name)" >
         <div class="avatar">
           {{ user.name?.charAt(0)?.toUpperCase() }}
         </div>
