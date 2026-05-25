@@ -3,6 +3,8 @@ import { ApiService } from '../../apiservice';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { effect,signal } from '@angular/core';
+import { Socket } from '../../socket';
+
 @Component({
   selector: 'app-login',
   imports: [ FormsModule],

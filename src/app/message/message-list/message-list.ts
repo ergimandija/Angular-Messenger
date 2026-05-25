@@ -3,6 +3,7 @@ import { signal,input, effect,  } from '@angular/core';
 import { ApiService, Message } from '../../apiservice';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Socket } from '../../socket';
 
 @Component({
   selector: 'app-message-list',
@@ -16,14 +17,19 @@ export class MessageList {
   readonly messages = signal<Message[]>([]);
   readonly isLoading = signal(false);
   readonly errorMessage = signal('');
-  constructor (private apiService: ApiService, private router: Router){
+  constructor (private apiService: ApiService,private socketService: Socket, private router: Router){
 
     effect(() => {
       const id = this.userId();
 
-      if (id) {
+      if(id && socketService.lastMessage()){
+        this.loadMessages(id);
+        
+      }
+      else if (id) {
         this.loadMessages(id);
       }
+      
     });
 
      if(!this.apiService.loginStatus().loggedIn){
@@ -39,7 +45,7 @@ export class MessageList {
       this.messages.set(data);
       this.isLoading.set(false);
     }
-    
+    this.scrollToBottom();
   }
 
   async sendMessage(){
@@ -52,7 +58,6 @@ export class MessageList {
       if(response.error){
       this.errorMessage.set(response.error);
     } else {
-      console.log(response);
       this.messages.update(msgs => [...msgs, message]);
       this.scrollToBottom();
     }

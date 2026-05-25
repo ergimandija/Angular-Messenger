@@ -37,7 +37,6 @@ export interface UserListItem {
 })
 export class ApiService {
   private apiUrl = `http://webp-ilv-backend.cs.technikum-wien.at/messenger/`;
-
   private _loginStatus;
   public loginStatus ;
 
@@ -97,7 +96,7 @@ export class ApiService {
 
   async getConversation(user2Id: string) {
     const token = this._loginStatus().token;
-    const data = await fetch(this.apiUrl + "get_conversation.php?token=" + token + "&user1_id=" + this._loginStatus().id + "&user2_id=" + user2Id);
+    const data = await fetch("http://webp-ilv-backend.cs.technikum-wien.at:3000/get-conversation?token=" + token + "&user1Id=" + this._loginStatus().id + "&user2Id=" + user2Id);
     const conversation = await data.json();
     if (conversation.error) {
       return { error: conversation.error };
@@ -107,10 +106,10 @@ export class ApiService {
 
   async sendMessage(recieverId: string, message: string) {
     const token = this._loginStatus().token;
-    const response = await fetch(this.apiUrl + "send_message.php", {
+    const response = await fetch("http://webp-ilv-backend.cs.technikum-wien.at:3000/send-message", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         sender_id: this._loginStatus().id,
         receiver_id: recieverId,
         token: token,

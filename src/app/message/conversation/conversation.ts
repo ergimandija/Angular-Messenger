@@ -3,10 +3,13 @@ import { ApiService, UserData, UserListItem } from '../../apiservice';
 import { CommonModule } from '@angular/common';
 import { MessageList } from '../message-list/message-list';
 import { Router } from '@angular/router';
+import { Socket } from '../../socket';
+import { Bubble } from '../bubble/bubble';
+
 @Component({
   selector: 'app-conversation',
   standalone: true,
-  imports: [CommonModule,MessageList],
+  imports: [CommonModule,MessageList,Bubble],
   templateUrl: './conversation.html',
   styleUrl: './conversation.css',
 })
@@ -16,13 +19,12 @@ export class Conversation {
   errorMessage = signal('');
   selectedUserId = signal('');
   public knownUsers;
-  constructor(private apiService: ApiService,private router:Router) {
+  constructor(private apiService: ApiService,private socketService: Socket,private router:Router) {
       effect(()=>{
         this.loadUsers();
       });
-
+      socketService.connect(apiService.loginStatus().id,apiService.loginStatus().token);
       this.knownUsers = JSON.parse(localStorage.getItem("known-contacts")||'[]');
-      console.log(this.knownUsers);
       // if(!this.apiService.loginStatus().loggedIn){
       //     this.router.navigate(['/login']);
       // }
@@ -39,25 +41,26 @@ export class Conversation {
         }
 
         this.users.set(data);
-        console.log(data);
       },
 
       
     );
   }
 
-  loadConversation(userId: string,userName: string) {
+  addKnownConversation(userName: string){
     let contactsArray:String[] = [];
-    console.log(userName);
     const contactListString = localStorage.getItem("known-contacts");
       if(contactListString!=null){
         contactsArray = JSON.parse(contactListString);
       }
-       if(!contactsArray.includes(userName)){ 
+      if(!contactsArray.includes(userName)){ 
         contactsArray.push(userName); 
        } 
        localStorage.setItem("known-contacts", JSON.stringify(contactsArray));
-
+     
+       
+  }
+  loadConversation(userId: string) {
        this.selectedUserId.set(userId);
   }
  

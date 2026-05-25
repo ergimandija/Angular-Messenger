@@ -12,9 +12,10 @@
     <div>Known Users</div>
     @for (user of users(); track user.id) {
       @if(user.id && user.name && knownUsers.includes(user.name)){
-      <li class="user-item" (click)="loadConversation(user.id,user.name)" >
+      <li class="user-item"         
+      (click)="loadConversation(user.id); addKnownConversation(user.name)" >
         <div class="avatar">
-          {{ user.name?.charAt(0)?.toUpperCase() }}
+          {{ user.name.charAt(0).toUpperCase() }}
         </div>
 
         <div class="user-info">
@@ -30,9 +31,12 @@
     <div>Other Users</div>
     @for (user of users(); track user.id) {
       @if(user.id && user.name && !knownUsers.includes(user.name)){
-      <li class="user-item" (click)="loadConversation(user.id,user.name)" >
+      <li
+        class="user-item"
+        (click)="loadConversation(user.id); addKnownConversation(user.name)"
+      >
         <div class="avatar">
-          {{ user.name?.charAt(0)?.toUpperCase() }}
+          {{ user.name.charAt(0).toUpperCase() }}
         </div>
 
         <div class="user-info">
@@ -47,4 +51,5 @@
 
 </div>
 <app-message-list class="chat-window" [userId]="selectedUserId()"></app-message-list>
+<app-bubble [currentUserId]="selectedUserId()" (onClickBubble)="loadConversation($event)"></app-bubble>
 </div>
